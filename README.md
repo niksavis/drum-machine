@@ -1,4 +1,4 @@
-# Markdown Previewer
+# Drum Machine
 
 This is an implementation of a drum machine for [freeCodeCamp](https://www.freecodecamp.org/) front end library certification based on React.
 
