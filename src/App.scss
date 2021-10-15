@@ -1,1 +1,85 @@
 @import '~bootstrap/scss/bootstrap';
+
+$padWidth: 80px;
+$padHeight: 80px;
+@import url('https://fonts.googleapis.com/css?family=Russo+One');
+
+body {
+  font-family: Russo One;
+}
+
+body {
+  user-select: none;
+  background-color: lighten(blue, 15%);
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.inner-container {
+  outline: 5px solid orange;
+  position: relative;
+  width: 660px;
+  color: white;
+  text-align: center;
+  background-color: lighten(black, 15%);
+  .pad-bank {
+    display: inline-block;
+    margin: 30px;
+    .drum-pad {
+      background-color: grey;
+      position: relative;
+      float: left;
+      width: $padWidth;
+      height: $padHeight;
+      margin-right: 10px;
+      border-radius: 5px;
+      padding-top: 35px;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+    .drum-pad-activated {
+        background-color:#ffc107;
+        color: black;
+    }
+  }
+  .controls-container {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top;
+    .control {
+      width: 100px;
+      margin: auto;
+      p {
+        margin-bottom: 0;
+      }
+    }
+    #recording {
+      width: 200px;
+      color: black;
+      background-color: #ffc107;
+      margin: 15px auto;
+      padding: 15px;
+      box-sizing: border-box;
+      line-height: 0%;
+    }
+    #display {
+      width: 200px;
+      background-color: gray;
+      margin: 15px auto;
+      padding: 15px;
+      box-sizing: border-box;
+      line-height: 0%;
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .inner-container {
+    transform: scale(0.7);
+  }
+}

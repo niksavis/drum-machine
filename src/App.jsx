@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './App.scss';
-import { bankOne } from './audioClips';
+import { Container, Row, Col } from 'react-bootstrap';
+import audioClips from './audioClips';
 
 // eslint-disable-next-line object-curly-newline
 function Pad({ clip, volume, setRecording, setDisplay }) {
@@ -16,6 +17,7 @@ function Pad({ clip, volume, setRecording, setDisplay }) {
     audioTag.play();
     setRecording((prev) => `${prev + clip.keyTrigger} `);
     setDisplay(() => clip.id);
+    document.getElementById('recording').focus();
   };
 
   const handleKeyDown = (e) => {
@@ -38,7 +40,7 @@ function Pad({ clip, volume, setRecording, setDisplay }) {
       tabIndex="-1"
       onClick={playSound}
       onKeyDown={handleKeyDown}
-      className={`drum-pad btn btn-secondary p-4 m-3 ${active && 'btn-warning'}`}
+      className={`drum-pad p-4 m-1 ${active && 'drum-pad-activated'}`}
     >
       <audio className="clip" id={clip.keyTrigger} src={clip.url}>
         <track kind="captions" />
@@ -83,61 +85,60 @@ function App() {
   };
 
   return (
-    <div className="bg-info min-vh-100 text-white" id="drum-machine">
-      <div className="text-center">
-        {bankOne.map((clip) => (
-          <Pad
-            key={clip.id}
-            clip={clip}
-            volume={volume}
-            setRecording={setRecording}
-            setDisplay={setDisplay}
-          />
-        ))}
-        <br />
-        <h4>Volume</h4>
-        <input
-          type="range"
-          step="0.01"
-          onChange={(e) => setVolume(e.target.value)}
-          value={volume}
-          min="0"
-          max="1"
-          className="w-50"
-        />
-        <p id="display">{display}</p>
-        <h3>{recording}</h3>
-        {recording && (
-          <>
-            <button
-              onClick={playRecording}
-              type="button"
-              className="btn btn-success"
-            >
-              play
-            </button>
-            <button
-              onClick={() => setRecording('')}
-              type="button"
-              className="btn btn-danger"
-            >
-              clear
-            </button>
-            <br />
-            <h4>Speed</h4>
-            <input
-              type="range"
-              step="0.01"
-              onChange={(e) => setSpeed(e.target.value)}
-              value={speed}
-              min="0.1"
-              max="1.2"
-              className="w-50"
+    <Container className="inner-container" id="drum-machine">
+      <Row>
+        <Col className="pad-bank">
+          {audioClips.map((clip) => (
+            <Pad
+              key={clip.id}
+              clip={clip}
+              volume={volume}
+              setRecording={setRecording}
+              setDisplay={setDisplay}
             />
-          </>
-        )}
-      </div>
-    </div>
+          ))}
+        </Col>
+        <Col className="controls-container">
+          <h4>Volume</h4>
+          <input
+            className="control"
+            type="range"
+            step="0.01"
+            onChange={(e) => setVolume(e.target.value)}
+            value={volume}
+            min="0"
+            max="1"
+          />
+          <p id="display">{display}</p>
+          <input type="text" id="recording" value={recording} />
+          <h4>Speed</h4>
+          <input
+            className="control"
+            type="range"
+            step="0.01"
+            onChange={(e) => setSpeed(e.target.value)}
+            value={speed}
+            min="0.1"
+            max="1.2"
+          />
+          <br />
+          <button
+            onClick={playRecording}
+            type="button"
+            className="btn btn-success"
+          >
+            play
+          </button>
+          <button
+            onClick={() => setRecording('')}
+            type="button"
+            className="btn btn-danger"
+          >
+            clear
+          </button>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
